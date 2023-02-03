@@ -1,15 +1,34 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from "react-router-dom";
 
 function Header() {
+  const location = useLocation();
+
   return (
-    <header className="border-b border-b-gray-200 py-5">
+    <header
+      className={`py-5 w-full ${
+        location.pathname === "/" && "absolute top-0 left-0 z-40"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-3 flex items-center justify-start">
-        <h1 className="font-extrabold text-3xl text-gray-800">
+        <h1
+          className={`font-semibold text-2xl hover:opacity-90 ${
+            location.pathname === "/"
+              ? "text-white lg:text-gray-900"
+              : "text-gray-900"
+          }`}
+        >
           <Link to="/">Rent or Sell</Link>
         </h1>
-        <Link to="/login" className="btn btn-ghost mr-4 ml-auto px-7">
-          Login
-        </Link>
+        {
+          <Link
+            to="/login"
+            className={`btn btn-link mr-4 ml-auto px-7 hover:no-underline hover:opacity-60 ${
+              location.pathname === "/" ? "text-white" : "text-gray-900"
+            }`}
+          >
+            Login
+          </Link>
+        }
         <Link to="/signup" className="btn btn-primary px-7">
           Signup
         </Link>
