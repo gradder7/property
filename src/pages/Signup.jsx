@@ -41,7 +41,7 @@ function Signup() {
       delete formData.password;
       formData.createdOn = serverTimestamp();
       await setDoc(doc(db, "users", user.uid), formData);
-      navigate("/");
+      navigate("/profile");
     } catch (error) {
       toast.error(error.message);
     }

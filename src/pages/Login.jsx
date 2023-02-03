@@ -23,7 +23,7 @@ function Login() {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
       console.log(user);
       if(user){
-        navigate("/");
+        navigate("/profile");
       }
 
     } catch (error) {

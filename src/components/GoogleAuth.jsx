@@ -23,7 +23,7 @@ function GoogleAuth() {
           createdOn: serverTimestamp(),
         });
       }
-      navigate('/');
+      navigate("/profile");
 
     } catch (error) {
       toast.error(error.message);
