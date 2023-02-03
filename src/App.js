@@ -9,7 +9,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/Signup";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./pages/Profile";
-import CreateListing from "./pages/CreateListing";
+import CreateListing from "./pages/create-listing/CreateListing";
 
 function App() {
   return (
