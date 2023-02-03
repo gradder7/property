@@ -16,9 +16,16 @@ import {
 } from "./createListingFunctions";
 
 import { ReactComponent as DeleteIcon } from "../../assets/svg/delete.svg";
+import { useNavigate } from "react-router-dom";
 
 function CreateListing() {
   const [imageThumbs, setImageThumbs] = useState([]);
+   const navigate = useNavigate();
+   const onSubmit = async (values) => {
+     const listingId = await submitListingData(values);
+    //  when created got to particular listing
+     navigate(`/listing/${listingId}`);
+   };
 
   const onDropHanlder = (acceptedFiles, setFieldValue) => {
     setImageThumbs(
@@ -41,7 +48,7 @@ function CreateListing() {
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={submitListingData}
+            onSubmit={onSubmit}
           >
             {({ isSubmitting, values, resetForm, setFieldValue }) => {
               return (

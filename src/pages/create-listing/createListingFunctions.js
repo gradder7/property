@@ -93,8 +93,12 @@ export const submitListingData = async (values) => {
     delete formData.geolocationEnabled;
     delete formData.images;
 
-    await addDoc(collection(db, "listings"), { ...formData, imgUrls });
-    toast.success("Listing created successfully");
+     const listingDocRef = await addDoc(collection(db, "listings"), {
+       ...formData,
+       imgUrls,
+     });
+     toast.success("Listing created successfully");
+     return listingDocRef.id;
   } catch (error) {
     toast.error(error.message);
   }

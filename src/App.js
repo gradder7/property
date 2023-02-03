@@ -10,6 +10,7 @@ import SignUp from "./pages/Signup";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./pages/Profile";
 import CreateListing from "./pages/create-listing/CreateListing";
+import ListingDetails from "./pages/ListingDetails";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/create-listing" element={<PrivateRoute />}>
             <Route path="/create-listing" element={<CreateListing />} />
           </Route>
+          <Route path="/listing/:listingId" element={<ListingDetails />} />
         </Routes>
         <Footer />
       </Router>
