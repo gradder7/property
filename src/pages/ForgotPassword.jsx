@@ -4,6 +4,9 @@ import * as Yup from "yup";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { toast } from "react-toastify";
 import TextInput from "../components/TextInput";
+import FormHeading from "../components/FormHeading";
+import FormCard from "../layout/FormCard";
+import FormContainer from "../layout/FormContainer";
 
 function ForgotPassword() {
   useEffect(() => {
@@ -21,48 +24,44 @@ function ForgotPassword() {
   };
 
   return (
-    <main className="min-h-screen max-w-7xl mx-auto lg:py-24 md:py-20 py-14 px-3 flex items-center justify-center">
-      <div className="card card-bordered border-gray-200 shadow-lg w-full max-w-md">
-        <div className="card-body">
-          <h1 className="text-3xl md:text-4xl  text-gray-900 text-center font-bold md:mb-8 mb-4">
-            Reset password
-          </h1>
-          <Formik
-            initialValues={{
-              email: "",
-            }}
-            validationSchema={Yup.object({
-              email: Yup.string()
-                .email("Invalid email address")
-                .required("Required"),
-            })}
-            onSubmit={onSubmit}
-          >
-            {({ isSubmitting }) => {
-              return (
-                <Form>
-                  <div className="mb-4">
-                    <TextInput
-                      label="Email"
-                      id="email"
-                      name="email"
-                      type="email"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="btn btn-primary btn-block mx-0"
-                    disabled={isSubmitting}
-                  >
-                    Send reset link
-                  </button>
-                </Form>
-              );
-            }}
-          </Formik>
-        </div>
-      </div>
-    </main>
+    <FormContainer>
+      <FormCard>
+        <FormHeading heading="Reset password" />
+        <Formik
+          initialValues={{
+            email: "",
+          }}
+          validationSchema={Yup.object({
+            email: Yup.string()
+              .email("Invalid email address")
+              .required("Required"),
+          })}
+          onSubmit={onSubmit}
+        >
+          {({ isSubmitting }) => {
+            return (
+              <Form>
+                <div className="mb-4">
+                  <TextInput
+                    label="Email"
+                    id="email"
+                    name="email"
+                    type="email"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-block mx-0"
+                  disabled={isSubmitting}
+                >
+                  Send reset link
+                </button>
+              </Form>
+            );
+          }}
+        </Formik>
+      </FormCard>
+    </FormContainer>
   );
 }
 export default ForgotPassword;

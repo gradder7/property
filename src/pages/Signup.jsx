@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import TextInput from "../components/TextInput";
 import { toast } from "react-toastify";
 import { db } from "../firebase.config";
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -12,6 +13,9 @@ import {
 } from "firebase/auth";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import GoogleAuth from "../components/GoogleAuth";
+import FormContainer from "../layout/FormContainer";
+import FormHeading from "../components/FormHeading";
+import FormCard from "../layout/FormCard";
 function Signup() {
   const navigate = useNavigate();
 
@@ -44,72 +48,73 @@ function Signup() {
   };
 
   return (
-    <main className="min-h-screen max-w-7xl mx-auto lg:py-24 md:py-20 py-14 px-3 flex items-center justify-center">
-      <div className="card card-bordered border-gray-200 shadow-lg w-full max-w-md">
-        <div className="card-body">
-          <h1 className="text-3xl md:text-4xl text-gray-900 text-center font-bold mb-8">
-            Get started!
-          </h1>
-          <GoogleAuth />
-          <Formik
-            initialValues={{
-              name: "",
-              email: "",
-              password: "",
-            }}
-            validationSchema={Yup.object({
-              name: Yup.string().required("Required"),
-              email: Yup.string()
-                .email("Invalid email address")
-                .required("Required"),
-              password: Yup.string()
-                .min(5, "Password must have atleast five characters")
-                .required("Required"),
-            })}
-            onSubmit={onSubmit}
-          >
-            {({ isSubmitting }) => {
-              return (
-                <Form>
-                  <div className="mb-4">
-                    <TextInput label="Name" id="name" name="name" type="text" />
-                  </div>
-                  <div className="mb-4">
-                    <TextInput
-                      label="Email"
-                      id="email"
-                      name="email"
-                      type="email"
-                    />
-                  </div>
-                  <div className="mb-8">
-                    <TextInput
-                      label="Password"
-                      id="password"
-                      name="password"
-                      type="password"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="btn btn-primary btn-block mx-0 mb-8"
-                    disabled={isSubmitting}
-                  >
-                    Create account
-                  </button>
-                </Form>
-              );
-            }}
-          </Formik>
-          <p className="text-center text-sm font-medium text-gray-700">
-            Already have an account?{" "}
-            <Link to="/login" className="text-primary hover:underline">
-              Login
-            </Link>
-          </p>
-        </div>
-      </div>
-    </main>
+    <FormContainer>
+      <FormCard>
+        <FormHeading heading="Get started" />
+        <GoogleAuth />
+        <Formik
+          initialValues={{
+            fullname: "",
+            email: "",
+            password: "",
+          }}
+          validationSchema={Yup.object({
+            fullname: Yup.string().required("Required"),
+            email: Yup.string()
+              .email("Invalid email address")
+              .required("Required"),
+            password: Yup.string()
+              .min(5, "Password must have atleast five characters")
+              .required("Required"),
+          })}
+          onSubmit={onSubmit}
+        >
+          {({ isSubmitting }) => {
+            return (
+              <Form>
+                <div className="mb-4">
+                  <TextInput
+                    label="Name"
+                    id="fullname"
+                    name="fullname"
+                    type="text"
+                  />
+                </div>
+                <div className="mb-4">
+                  <TextInput
+                    label="Email"
+                    id="email"
+                    name="email"
+                    type="email"
+                  />
+                </div>
+                <div className="mb-8">
+                  <TextInput
+                    label="Password"
+                    id="password"
+                    name="password"
+                    type="password"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-block mx-0 mb-8"
+                  disabled={isSubmitting}
+                >
+                  Create account
+                </button>
+              </Form>
+            );
+          }}
+        </Formik>
+        <p className="text-center text-sm font-medium text-gray-700">
+          Already have an account?{" "}
+          <Link to="/login" className="text-primary hover:underline">
+            Login
+          </Link>
+        </p>
+      </FormCard>
+    </FormContainer>
   );
 }
 export default Signup;
