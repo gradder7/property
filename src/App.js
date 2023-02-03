@@ -10,7 +10,7 @@ import SignUp from "./pages/Signup";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./pages/Profile";
 import CreateListing from "./pages/create-listing/CreateListing";
-import ListingDetails from "./pages/ListingDetails";
+import ListingDetails from "./pages/listing-details/ListingDetails";
 
 function App() {
   return (
