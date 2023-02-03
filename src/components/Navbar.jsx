@@ -8,34 +8,27 @@ function Navbar() {
   const { loggedIn } = useAuthStatus();
 
   const logOut = async () => {
-    const auth=getAuth();
+    const auth = getAuth();
     await auth.signOut();
     navigate("/login");
   };
 
+  const navLinkClass = `nav-link ${
+    location.pathname === "/" ? "text-white" : "text-gray-900"
+  }`;
+
   return (
     <nav className="ml-auto">
-      <ul className="flex items-center justify-end">
+      <ul className="flex items-center justify-end space-x-2">
         {loggedIn && (
           <>
             <li>
-              <Link
-                to="/profile"
-                className={`btn btn-link mr-4 ml-auto px-7 hover:no-underline hover:opacity-60 ${
-                  location.pathname === "/" ? "text-white" : "text-gray-900"
-                }`}
-              >
+              <Link to="/profile" className={navLinkClass}>
                 Profile
               </Link>
             </li>
             <li>
-              <button
-                onClick={logOut}
-                type="button"
-                className={`btn btn-link mr-4 ml-auto px-7 hover:no-underline hover:opacity-60 ${
-                  location.pathname === "/" ? "text-white" : "text-gray-900"
-                }`}
-              >
+              <button onClick={logOut} type="button" className={navLinkClass}>
                 Logout
               </button>
             </li>
@@ -44,12 +37,7 @@ function Navbar() {
         {!loggedIn && (
           <>
             <li>
-              <Link
-                to="/login"
-                className={`btn btn-link mr-4 ml-auto px-7 hover:no-underline hover:opacity-60 ${
-                  location.pathname === "/" ? "text-white" : "text-gray-900"
-                }`}
-              >
+              <Link to="/login" className={navLinkClass}>
                 Login
               </Link>
             </li>
