@@ -13,6 +13,7 @@ import ListingLocation from "./ListingLocation";
 function ListingDetails() {
   const [listing, setListing] = useState({});
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const { listingId } = useParams();
 
@@ -23,10 +24,13 @@ function ListingDetails() {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setListing(docSnap.data());
+        } else {
+          throw new Error("Listing does not exist");
         }
         console.log(docSnap.data());
       } catch (error) {
-        toast.error(error.message);
+        // toast.error(error.message);
+        setError(error.message);
       } finally {
         setLoading(false);
       }
@@ -53,6 +57,13 @@ function ListingDetails() {
       </div>
     );
   }
+    if (error) {
+      return (
+        <div className="min-h-screen max-w-7xl mx-auto px-3 lg:py-24 md:py-20 py-14 text-center">
+          <p>Listing does not exist.</p>
+        </div>
+      );
+    }
 
   return (
     <main>
@@ -64,9 +75,9 @@ function ListingDetails() {
         />
       </div>
       <article className="min-h-screen max-w-7xl px-3 mx-auto lg:py-24 md:py-20 py-14">
-        <section className="lg:grid lg:grid-cols-[1fr_448px] lg:gap-9">
+        <section className="lg:grid lg:grid-cols-[1fr_448px] lg:gap-9 lg:items-start">
           <div className="bg-white card card-bordered border-gray-300 max-w-md mb-8 lg:mb-0 -mt-40 md:-mt-48 lg:order-2">
-            <div className={`card-body relative ${onOffer ? "pt-14" : null}`}>
+            <div className={`card-body relative ${onOffer ? "pt-14" : ""}`}>
               <ListingInfoCard {...listing} />
             </div>
           </div>
