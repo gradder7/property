@@ -143,6 +143,7 @@ function MyListings() {
                   key={docID}
                   docID={docID}
                   deleteListing={() => showConfirmationModal(docID)}
+                  editListing={auth.currentUser.uid === data.userRef}
                 />
               ))
             ) : (
