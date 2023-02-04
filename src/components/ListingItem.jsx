@@ -1,5 +1,5 @@
 import { formatPrice } from "../utils/utils";
-
+import SaveButton from "./SaveButton";
 import { ReactComponent as BedroomIcon } from "../assets/svg/bed.svg";
 import { ReactComponent as BathroomIcon } from "../assets/svg/bathtub.svg";
 import { ReactComponent as CarIcon } from "../assets/svg/car.svg";
@@ -94,6 +94,7 @@ function ListingItem({
           >
             More info
           </Link>
+          <SaveButton docID={docID} />
           {editListing || deleteListing ? (
             <div className="grid grid-cols-2 gap-2 flex-grow">
               {editListing && (
