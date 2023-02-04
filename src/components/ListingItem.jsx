@@ -23,6 +23,7 @@ function ListingItem({
   type,
   deleteListing,
   editListing,
+  isFavorite,
 }) {
   const listingType = type === "sale" ? "For Sale" : "For Rent";
   const listingPrice = onOffer ? discountPrice : regularPrice;
@@ -88,13 +89,17 @@ function ListingItem({
           </span>
         </div>
         <div className="card-actions">
-          <Link
-            className="btn btn-primary btn-block mx-0"
-            to={`/listing/${docID}`}
-          >
-            More info
-          </Link>
-          <SaveButton docID={docID} />
+          <div className="flex gap-2 w-full">
+            <Link
+              className="btn btn-primary btn-block mx-0 flex-1"
+              to={`/listing/${docID}`}
+            >
+              More info
+            </Link>
+            {isFavorite !== undefined && (
+              <SaveButton docID={docID} isFavorite={isFavorite} />
+            )}
+          </div>
           {editListing || deleteListing ? (
             <div className="grid grid-cols-2 gap-2 flex-grow">
               {editListing && (
