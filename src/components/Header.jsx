@@ -10,7 +10,7 @@ function Header() {
   const { loggedIn } = useAuthStatus();
 
   return (
-    <header className="px-3">
+    <header className="sticky top-0 z-30 w-full py-0 bg-white shadow-xl shadow-black-600/20 sm:px-4 px-2">
       <div className="w-full max-w-7xl mx-auto flex items-center py-5">
         <Link
           to="/"

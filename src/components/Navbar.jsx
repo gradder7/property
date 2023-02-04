@@ -42,7 +42,7 @@ function Navbar({ loggedIn }) {
   };
 
   return (
-    <nav className="ml-auto relative flex items-center justify-end gap-2 xl:gap-6">
+    <nav className=" ml-auto relative flex items-center justify-end gap-2 xl:gap-6">
       {isNavOpen ? (
         loggedIn ? (
           <ul className="navbar-dropdown xl:flex xl:items-center xl:justify-end xl:gap-6 xl:static xl:py-0 xl:mt-0 absolute top-full right-0 w-64 xl:w-auto z-50 py-4 bg-white shadow-lg  rounded-md border xl:border-none xl:shadow-none border-gray-200 mt-2">
@@ -85,7 +85,7 @@ function Navbar({ loggedIn }) {
               <button
                 onClick={logOut}
                 type="button"
-                className="xl:px-0 px-4 nav-link"
+                className="btn btn-primary"
               >
                 Logout
               </button>
