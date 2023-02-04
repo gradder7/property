@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import heroSectionBg from "../assets/images/hero-section-bg.jpg";
-
+import heroSectionBg from "../../assets/images/hero-section-bg.jpg";
 function HeroSection() {
   return (
     <section className="relative h-[50rem] bg-white">

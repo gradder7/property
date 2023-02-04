@@ -3,16 +3,17 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ForgotPassword from "./pages/ForgotPassword";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import SignUp from "./pages/Signup";
+
+import Home from "./pages/home/Home";
+import Login from "./pages/login/Login";
+import SignUp from "./pages/sign-up/Signup";
 import PrivateRoute from "./components/PrivateRoute";
-import Profile from "./pages/Profile";
+import Profile from "./pages/profile/Profile";
 import CreateListing from "./pages/create-listing/CreateListing";
 import ListingDetails from "./pages/listing-details/ListingDetails";
 import MyListings from "./pages/MyListing";
 import EditListing from "./pages/edit-listing/EditListing";
+import ForgotPassword from "./pages/forgot-password/ForgotPassword";
 
 function App() {
   return (

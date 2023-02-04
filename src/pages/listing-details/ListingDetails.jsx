@@ -57,13 +57,13 @@ function ListingDetails() {
       </div>
     );
   }
-    if (error) {
-      return (
-        <div className="min-h-screen max-w-7xl mx-auto px-3 lg:py-24 md:py-20 py-14 text-center">
-          <p>Listing does not exist.</p>
-        </div>
-      );
-    }
+  if (error) {
+    return (
+      <div className="min-h-screen max-w-7xl mx-auto px-3 lg:py-24 md:py-20 py-14 text-center">
+        <p>Listing does not exist.</p>
+      </div>
+    );
+  }
 
   return (
     <main>
@@ -104,7 +104,7 @@ function ListingDetails() {
           <h2 className="text-gray-900 font-extrabold text-3xl mb-4">
             Location
           </h2>
-          <div className="w-full h-96">
+          <div className="w-full h-[40rem]">
             <ListingLocation {...listing} />
           </div>
         </section>
