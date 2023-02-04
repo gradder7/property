@@ -12,6 +12,7 @@ import Profile from "./pages/Profile";
 import CreateListing from "./pages/create-listing/CreateListing";
 import ListingDetails from "./pages/listing-details/ListingDetails";
 import MyListings from "./pages/MyListing";
+import EditListing from "./pages/edit-listing/EditListing";
 
 function App() {
   return (
@@ -30,10 +31,13 @@ function App() {
           <Route path="/create-listing" element={<PrivateRoute />}>
             <Route path="/create-listing" element={<CreateListing />} />
           </Route>
+          <Route path="/listing/:listingId" element={<ListingDetails />} />
           <Route path="/my-listings" element={<PrivateRoute />}>
             <Route path="/my-listings" element={<MyListings />} />
           </Route>
-          <Route path="/listing/:listingId" element={<ListingDetails />} />
+          <Route path="/edit-listing/:listingId" element={<PrivateRoute />}>
+            <Route path="/edit-listing/:listingId" element={<EditListing />} />
+          </Route>
         </Routes>
         <Footer />
       </Router>
