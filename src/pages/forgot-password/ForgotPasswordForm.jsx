@@ -5,6 +5,7 @@ import { sendPasswordResetEmail } from "firebase/auth";
 
 import TextInput from "../../components/TextInput";
 import { getAuth } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const initialValues = {
   email: "",
@@ -16,10 +17,12 @@ const validationSchema = Yup.object({
 
 function ForgotPasswordForm() {
     const auth =getAuth();
+    const navigate=useNavigate();
   const onSubmit = async ({ email }) => {
     try {
       await sendPasswordResetEmail(auth, email);
       toast.success("Reset link sent successfully.");
+      navigate('/login')
     } catch (error) {
       toast.error(error.message);
     }

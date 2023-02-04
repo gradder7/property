@@ -8,14 +8,18 @@ import { v4 as uuidv4 } from "uuid";
 
 function Category() {
   const initalRender = useRef(true);
-  const [listings, setListings] = useState([]);
   const [sortBy, setSortBy] = useState("");
+  const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const { checkFavorite } = useContext(FavoritesContext);
   const { categoryName } = useParams();
 
   useEffect(() => {
+    document.title =
+      categoryName === "sale"
+        ? "For Sale | Rent or Sell"
+        : "For Rent | Rent or Sell";
     const getListingsData = async () => {
       const [data, error] = await getListingsByCategory(categoryName);
       if (error) {
