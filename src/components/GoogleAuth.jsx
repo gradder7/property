@@ -21,6 +21,7 @@ function GoogleAuth() {
           name: user.displayName,
           email: user.email,
           createdOn: serverTimestamp(),
+          favorites:[]
         });
       }
       navigate("/profile");
