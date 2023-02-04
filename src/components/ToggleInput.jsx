@@ -8,6 +8,7 @@ function ToggleInput({ label, ...props }) {
         <input
           type="checkbox"
           className="toggle toggle-primary"
+          checked={field.value}
           {...field}
           {...props}
         />
