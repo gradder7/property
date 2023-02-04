@@ -18,6 +18,7 @@ import Category from "./pages/category/Category";
 import { FavoritesProvider } from "./context/FavoritesContext";
 import SavedListings from "./pages/SavedListings";
 import ScrollToTop from "./components/ScrollToTop";
+import Messages from "./pages/Messages";
 
 function App() {
   return (
@@ -51,6 +52,9 @@ function App() {
               <Route path="/category/:categoryName" element={<Category />} />
               <Route path="/favorites" element={<PrivateRoute />}>
                 <Route path="/favorites" element={<SavedListings />} />
+              </Route>
+              <Route path="/messages" element={<PrivateRoute />}>
+                <Route path="/messages" element={<Messages />} />
               </Route>
             </Routes>
             <Footer />
