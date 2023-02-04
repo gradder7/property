@@ -13,8 +13,16 @@ function BrowseByCateogry() {
         expedita et non vero quos.
       </p>
       <div className="grid sm:grid-cols-2 grid-cols-1 gap-8">
-        <CategoryBlock bgImage={ForSaleCategoryBg} categoryName="For Sale" />
-        <CategoryBlock bgImage={ForRentCategoryBg} categoryName="For Rent" />
+        <CategoryBlock
+          bgImage={ForSaleCategoryBg}
+          categoryName="For Sale"
+          to="/category/sale"
+        />
+        <CategoryBlock
+          bgImage={ForRentCategoryBg}
+          categoryName="For Rent"
+          to="/category/rent"
+        />
       </div>
     </section>
   );
