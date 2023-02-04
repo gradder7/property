@@ -6,7 +6,7 @@ import TextInput from "../../components/TextInput";
 import TextAreaInput from "../../components/TextAreaInput";
 import ToggleInput from "../../components/ToggleInput";
 import RadioInput from "../../components/RadioInput";
-import FileInput from "../../components/FileInput";
+import FileInput from '../../components/FileInput';
 
 import validationSchema from "./validationSchema";
 import initialValues from "./initialValues";
