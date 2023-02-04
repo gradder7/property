@@ -13,6 +13,7 @@ import { db } from "../../firebase.config";
 import ListingLocation from "./ListingLocation";
 import ContactOwnerModal from "../../components/ContactOwnerModal";
 import { ReactComponent as MailIcon } from "../../assets/svg/mail.svg";
+import ListingDetailsSkeleton from "../../skeletons/ListingDetailsSkeleton";
 
 function ListingDetails() {
   const [listing, setListing] = useState({});
@@ -58,11 +59,8 @@ function ListingDetails() {
   console.log("=>>>>>", listing);
 
   if (loading) {
-    return (
-      <div className="min-h-screen max-w-7xl mx-auto px-3 lg:py-24 md:py-20 py-14">
-        <p>Loading....</p>
-      </div>
-    );
+    return <ListingDetailsSkeleton />;
+    
   }
   if (error) {
     return (
@@ -90,10 +88,12 @@ function ListingDetails() {
               </div>
             </div>
             <div className="lg:order-1">
-              <SaveButton
-                isFavorite={checkFavorite(listingId)}
-                docID={listingId}
-              />
+              {auth.currentUser && auth.currentUser.uid !== listing.userRef ? (
+                <SaveButton
+                  isFavorite={checkFavorite(listingId)}
+                  docID={listingId}
+                />
+              ) : null}
               {auth.currentUser && auth.currentUser.uid !== listing.userRef ? (
                 <button
                   type="button"

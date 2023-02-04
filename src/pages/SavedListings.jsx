@@ -4,7 +4,8 @@ import { doc, getDoc } from "firebase/firestore";
 import ListingItem from "../components/ListingItem";
 import { FavoritesContext } from "../context/FavoritesContext";
 import { db } from "../firebase.config";
-
+import ListingItemSkeleton from "../skeletons/ListingItemSkeleton";
+import { v4 as uuidv4 } from "uuid";
 function SavedListings() {
   const initalRender = useRef(true);
   const [loading, setLoading] = useState(true);
@@ -53,7 +54,13 @@ function SavedListings() {
   if (loading) {
     return (
       <div className="min-h-screen max-w-7xl mx-auto px-3 lg:py-24 md:py-20 py-14">
-        <p>Loading....</p>
+        <div className="grid grid-cols-1 gap-4 xl:gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {Array(9)
+            .fill()
+            .map((item) => (
+              <ListingItemSkeleton key={uuidv4()} />
+            ))}
+        </div>
       </div>
     );
   }

@@ -12,7 +12,7 @@ function ForgotPassword() {
   return (
     <FormContainer>
       <FormCard>
-        <FormHeading heading="Reset password" />
+        <FormHeading>Reset password</FormHeading>
         <ForgotPasswordForm />
       </FormCard>
     </FormContainer>

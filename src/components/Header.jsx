@@ -1,25 +1,25 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import Navbar from "./Navbar";
 
+import useAuthStatus from "../hooks/useAuthStatus";
+
+import { ReactComponent as Logo } from "../assets/svg/logo.svg";
+
 function Header() {
-  const location = useLocation();
+  const { loggedIn } = useAuthStatus();
+
   return (
-    <header
-      className={`py-5 w-full ${
-        location.pathname === "/" && "absolute top-0 left-0 z-40"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-3 flex items-center justify-start">
-        <h1
-          className={`font-bold text-2xl hover:opacity-90 ${
-            location.pathname === "/"
-              ? "text-white lg:text-gray-900"
-              : "text-gray-900"
-          }`}
+    <header className="px-3">
+      <div className="w-full max-w-7xl mx-auto flex items-center py-5">
+        <Link
+          to="/"
+          className="flex items-center gap-2 font-bold text-xl text-gray-900 hover:opacity-90"
         >
-          <Link to="/">Rent or Sell</Link>
-        </h1>
-        <Navbar />
+          <Logo className="w-10 h-10 sm:w-7 sm:h-7 text-primary" />
+          <span className="hidden sm:block">Rent or Sell</span>
+        </Link>
+        <Navbar loggedIn={loggedIn} />
       </div>
     </header>
   );

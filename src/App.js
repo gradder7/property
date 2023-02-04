@@ -17,41 +17,44 @@ import ForgotPassword from "./pages/forgot-password/ForgotPassword";
 import Category from "./pages/category/Category";
 import { FavoritesProvider } from "./context/FavoritesContext";
 import SavedListings from "./pages/SavedListings";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <div className="App font-sans">
       <FavoritesProvider>
         <Router>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            {/* private Routes */}
-            <Route path="/profile" element={<PrivateRoute />}>
-              <Route path="/profile" element={<Profile />} />
-            </Route>
-            <Route path="/create-listing" element={<PrivateRoute />}>
-              <Route path="/create-listing" element={<CreateListing />} />
-            </Route>
-            <Route path="/listing/:listingId" element={<ListingDetails />} />
-            <Route path="/my-listings" element={<PrivateRoute />}>
-              <Route path="/my-listings" element={<MyListings />} />
-            </Route>
-            <Route path="/edit-listing/:listingId" element={<PrivateRoute />}>
-              <Route
-                path="/edit-listing/:listingId"
-                element={<EditListing />}
-              />
-            </Route>
-            <Route path="/category/:categoryName" element={<Category />} />
-            <Route path="/favorites" element={<PrivateRoute />}>
-              <Route path="/favorites" element={<SavedListings />} />
-            </Route>
-          </Routes>
-          <Footer />
+          <ScrollToTop>
+            <Header />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              {/* private Routes */}
+              <Route path="/profile" element={<PrivateRoute />}>
+                <Route path="/profile" element={<Profile />} />
+              </Route>
+              <Route path="/create-listing" element={<PrivateRoute />}>
+                <Route path="/create-listing" element={<CreateListing />} />
+              </Route>
+              <Route path="/listing/:listingId" element={<ListingDetails />} />
+              <Route path="/my-listings" element={<PrivateRoute />}>
+                <Route path="/my-listings" element={<MyListings />} />
+              </Route>
+              <Route path="/edit-listing/:listingId" element={<PrivateRoute />}>
+                <Route
+                  path="/edit-listing/:listingId"
+                  element={<EditListing />}
+                />
+              </Route>
+              <Route path="/category/:categoryName" element={<Category />} />
+              <Route path="/favorites" element={<PrivateRoute />}>
+                <Route path="/favorites" element={<SavedListings />} />
+              </Route>
+            </Routes>
+            <Footer />
+          </ScrollToTop>
         </Router>
       </FavoritesProvider>
       <ToastContainer position="top-center" />

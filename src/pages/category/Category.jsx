@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { FavoritesContext } from "../../context/FavoritesContext";
 import { getListingsByCategory, getFilteredListings } from "./filterFunctions";
 import ListingItem from "../../components/ListingItem";
+import ListingItemSkeleton from "../../skeletons/ListingItemSkeleton";
+import { v4 as uuidv4 } from "uuid";
 
 function Category() {
   const initalRender = useRef(true);
@@ -81,7 +83,15 @@ function Category() {
           </div>
         </div>
 
-        {loading && <p>Loading...</p>}
+        {loading && (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {Array(9)
+              .fill()
+              .map((item) => (
+                <ListingItemSkeleton key={uuidv4()} />
+              ))}
+          </div>
+        )}
         {error && <p>{error}</p>}
 
         {listings.length > 0 && (

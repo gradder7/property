@@ -5,6 +5,8 @@ import MessageItem from "../components/MessageItem";
 
 import { db } from "../firebase.config";
 import { getAuth } from "firebase/auth";
+import { v4 as uuidv4 } from "uuid";
+import MessageItemSkeleton from "../skeletons/MessageItemSkeleton";
 
 function Messages() {
   const [loading, setLoading] = useState(true);
@@ -45,7 +47,13 @@ function Messages() {
   if (loading) {
     return (
       <div className="min-h-screen max-w-7xl mx-auto px-3 lg:py-24 md:py-20 py-14">
-        <p>Loading....</p>
+        <div className="space-y-6">
+          {Array(9)
+            .fill()
+            .map((item) => (
+              <MessageItemSkeleton key={uuidv4()} />
+            ))}
+        </div>
       </div>
     );
   }
