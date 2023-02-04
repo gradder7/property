@@ -9,7 +9,7 @@ function ListingPrice({ discountPrice, onOffer, regularPrice, type }) {
         </span>
       )}
       {onOffer ? (
-        <p className="font-bold text-gray-900 text-[2.5rem] pb-6 mb-6 border-b border-b-gray-300 no-underline">
+        <p className="font-bold text-gray-900 text-[2.2rem] md:text-[2.5rem] pb-6 mb-6 border-b border-b-gray-300">
           <del className="block text-2xl text-gray-400 font-semibold">
             {formatPrice(regularPrice)}
             {type === "rent" ? "/month" : null}

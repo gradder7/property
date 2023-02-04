@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { updateProfile,getAuth } from "firebase/auth";
+import { updateProfile, getAuth } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { Formik, Form } from "formik";
@@ -11,7 +11,7 @@ import { db } from "../../firebase.config";
 
 function EditProfileForm() {
   const [isEditing, setIsEditing] = useState(false);
-  const auth =getAuth();
+  const auth = getAuth();
 
   const saveDetails = async ({ name }) => {
     try {
@@ -25,6 +25,7 @@ function EditProfileForm() {
           name,
         });
         toast.success("Profile updated successfully");
+        
       }
     } catch (error) {
       toast.error(error.message);
@@ -32,6 +33,7 @@ function EditProfileForm() {
       setIsEditing(false);
     }
   };
+
 
   return (
     <Formik
@@ -48,12 +50,7 @@ function EditProfileForm() {
           <Form>
             <div className="mb-4">
               {isEditing && (
-                <TextInput
-                  label="Name"
-                  name="name"
-                  id="name"
-                  type="text"
-                />
+                <TextInput label="Name" name="name" id="name" type="text" />
               )}
               {!isEditing && (
                 <>

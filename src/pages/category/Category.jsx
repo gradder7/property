@@ -5,6 +5,7 @@ import { getListingsByCategory, getFilteredListings } from "./filterFunctions";
 import ListingItem from "../../components/ListingItem";
 import ListingItemSkeleton from "../../skeletons/ListingItemSkeleton";
 import { v4 as uuidv4 } from "uuid";
+import Loader from "../../components/Loader";
 
 function Category() {
   const initalRender = useRef(true);
