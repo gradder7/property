@@ -16,11 +16,12 @@ import EditListing from "./pages/edit-listing/EditListing";
 import ForgotPassword from "./pages/forgot-password/ForgotPassword";
 import Category from "./pages/category/Category";
 import { FavoritesProvider } from "./context/FavoritesContext";
+import SavedListings from "./pages/SavedListings";
 
 function App() {
   return (
     <div className="App font-sans">
-    <FavoritesProvider>
+      <FavoritesProvider>
         <Router>
           <Header />
           <Routes>
@@ -46,12 +47,15 @@ function App() {
               />
             </Route>
             <Route path="/category/:categoryName" element={<Category />} />
+            <Route path="/favorites" element={<PrivateRoute />}>
+              <Route path="/favorites" element={<SavedListings />} />
+            </Route>
           </Routes>
           <Footer />
         </Router>
-    </FavoritesProvider>
-        <ToastContainer position="top-center" />
-      </div>
+      </FavoritesProvider>
+      <ToastContainer position="top-center" />
+    </div>
   );
 }
 export default App;
