@@ -6,6 +6,7 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 function ListingGallery({ imgUrls, title }) {
   return (
     <Swiper
+      autoHeight={true}
       slidesPerView={1}
       pagination={{ clickable: true }}
       className="listing-gallery-carousel"
