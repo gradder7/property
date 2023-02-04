@@ -14,7 +14,7 @@ import ListingDetails from "./pages/listing-details/ListingDetails";
 import MyListings from "./pages/MyListing";
 import EditListing from "./pages/edit-listing/EditListing";
 import ForgotPassword from "./pages/forgot-password/ForgotPassword";
-import Category from "./pages/Category";
+import Category from "./pages/category/Category";
 
 function App() {
   return (
