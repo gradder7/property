@@ -1,9 +1,9 @@
-import listingFeaturedImage from "../assets/images/hero-section-bg.jpg";
+import { formatPrice } from "../utils/utils";
+
 import { ReactComponent as BedroomIcon } from "../assets/svg/bed.svg";
 import { ReactComponent as BathroomIcon } from "../assets/svg/bathtub.svg";
 import { ReactComponent as CarIcon } from "../assets/svg/car.svg";
 import { ReactComponent as RulerIcon } from "../assets/svg/ruler.svg";
-import { formatPrice } from "../utils/utils";
 import { Link } from "react-router-dom";
 
 function ListingItem({
@@ -19,6 +19,7 @@ function ListingItem({
   regularPrice,
   title,
   type,
+  deleteListing,
 }) {
   const listingType = type === "sale" ? "For Sale" : "For Rent";
   const listingPrice = onOffer ? discountPrice : regularPrice;
@@ -30,6 +31,7 @@ function ListingItem({
   const listingPriceText = `${formatPrice(listingPrice)} ${
     type === "rent" ? " / month" : ""
   }`;
+
   return (
     <article className="card shadow-xl card-bordered border-gray-200 relative">
       <div className="absolute flex items-center top-0 left-0 w-full p-4 gap-2">
@@ -89,6 +91,15 @@ function ListingItem({
           >
             More info
           </Link>
+          {deleteListing && (
+            <button
+              className="btn btn-accent btn-block mx-0"
+              type="button"
+              onClick={() => deleteListing(docID)}
+            >
+              Delete
+            </button>
+          )}
         </div>
       </div>
     </article>

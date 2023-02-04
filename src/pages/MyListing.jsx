@@ -1,9 +1,19 @@
 import { useState, useEffect, useRef } from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
+
+import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
 
 import { db } from "../firebase.config";
 import ListingItem from "../components/ListingItem";
 import { getAuth } from "firebase/auth";
+import { toast } from "react-toastify";
 
 function MyListings() {
   const initalRender = useRef(true);
@@ -12,7 +22,9 @@ function MyListings() {
   const [filteredListings, setFilteredListings] = useState([]);
   const [listingTypeOption, setListingTypeOption] = useState("all");
   const [error, setError] = useState("");
-  const auth=getAuth();
+  const [isConfirmationModalOpen, setisConfirmationModalOpen] = useState(false);
+  const [listingDocId, setListingDocId] = useState("");
+  const auth = getAuth();
 
   useEffect(() => {
     document.title = "My Listings | Rent or Sell";
@@ -46,8 +58,6 @@ function MyListings() {
     getUserListings();
   }, [auth.currentUser.uid]);
 
-
-  // filter the results
   useEffect(() => {
     if (!initalRender.current) {
       if (listingTypeOption === "all") {
@@ -62,6 +72,34 @@ function MyListings() {
       initalRender.current = false;
     }
   }, [listingTypeOption]);
+  const deleteListing = async (docID) => {
+    try {
+      await deleteDoc(doc(db, "listings", docID));
+      const newFilteredListings = filteredListings.filter(
+        (listing) => listing.docID !== docID
+      );
+      setFilteredListings(newFilteredListings);
+      const newListings = listings.filter((listing) => listing.docID !== docID);
+      setListings(newListings);
+      toast.success("Listing deleted successfully");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const showConfirmationModal = (docID) => {
+    setListingDocId(docID);
+    setisConfirmationModalOpen(true);
+  };
+
+  const hideConfirmationModal = () => {
+    setisConfirmationModalOpen(false);
+  };
+
+  const onConfirm = () => {
+    deleteListing(listingDocId);
+    hideConfirmationModal();
+  };
 
   if (loading) {
     return (
@@ -80,29 +118,48 @@ function MyListings() {
   }
 
   return (
-    <main className="min-h-screen max-w-7xl px-3 mx-auto">
-      <section className="lg:py-24 md:py-20 py-14">
-        <div className="md:flex md:items-center md:justify-between">
-          <h1 className="text-3xl md:text-4xl font-extrabold text-center mb-8">
-            My Listings
-          </h1>
-          <select
-            className="select select-bordered w-full max-w-xs mb-8 mx-auto md:mx-0 block"
-            value={listingTypeOption}
-            onChange={(e) => setListingTypeOption(e.target.value)}
-          >
-            <option value="all">All</option>
-            <option value="sale">For Sale</option>
-            <option value="rent">For Rent</option>
-          </select>
-        </div>
-        <div className="grid grid-cols-1 gap-4 xl:gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredListings.map(({ docID, data }) => (
-            <ListingItem {...data} key={docID} docID={docID} />
-          ))}
-        </div>
-      </section>
-    </main>
+    <>
+      <main className="min-h-screen max-w-7xl px-3 mx-auto">
+        <section className="lg:py-24 md:py-20 py-14">
+          <div className="md:flex md:items-center md:justify-between">
+            <h1 className="text-3xl md:text-4xl font-extrabold text-center mb-8">
+              My Listings
+            </h1>
+            <select
+              className="select select-bordered w-full max-w-xs mb-8 mx-auto md:mx-0 block"
+              value={listingTypeOption}
+              onChange={(e) => setListingTypeOption(e.target.value)}
+            >
+              <option value="all">All</option>
+              <option value="sale">For Sale</option>
+              <option value="rent">For Rent</option>
+            </select>
+          </div>
+          <div className="grid grid-cols-1 gap-4 xl:gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {filteredListings.length ? (
+              filteredListings.map(({ docID, data }) => (
+                <ListingItem
+                  {...data}
+                  key={docID}
+                  docID={docID}
+                  deleteListing={() => showConfirmationModal(docID)}
+                />
+              ))
+            ) : (
+              <p className="text-center text-lg lg:col-span-3 sm:col-span-2">
+                No listings to show.
+              </p>
+            )}
+          </div>
+        </section>
+      </main>
+      <DeleteConfirmationModal
+        message="Are you sure you want to delete this listing?"
+        showModal={isConfirmationModalOpen}
+        hideModal={hideConfirmationModal}
+        onConfirm={onConfirm}
+      />
+    </>
   );
 }
 export default MyListings;
