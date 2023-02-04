@@ -1,28 +1,33 @@
 import { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import { useParams } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import { doc, getDoc } from "firebase/firestore";
 
 import TextInput from "../../components/TextInput";
 import TextAreaInput from "../../components/TextAreaInput";
 import ToggleInput from "../../components/ToggleInput";
 import RadioInput from "../../components/RadioInput";
+import FileInput from "../../components/FileInput";
+import UploadedImageThumb from "../../components/UploadedImageThumb";
 
 import validationSchema from "./validationSchema";
-import { updateListing } from "./editListingFunctions";
+import {
+  updateListing,
+  deleteUploadedImage,
+  deleteSelectedImage,
+} from "./editListingFunctions";
 import { db } from "../../firebase.config";
 
 function EditListing() {
+  const [imageThumbs, setImageThumbs] = useState([]);
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
   const { listingId } = useParams();
-
   useEffect(() => {
     document.title = "Edit listing | Rent or Sell";
   }, []);
-
   useEffect(() => {
     const getListing = async () => {
       try {
@@ -43,9 +48,23 @@ function EditListing() {
         setLoading(false);
       }
     };
-
     getListing();
   }, [listingId]);
+
+  const onDropHanlder = (acceptedFiles, setFieldValue) => {
+    setImageThumbs(
+      acceptedFiles.map((file) =>
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        })
+      )
+    );
+    setFieldValue("images", acceptedFiles);
+  };
+
+  const onSubmit = async (values) => {
+    await updateListing(values, listingId);
+  };
 
   if (loading) {
     return (
@@ -54,7 +73,6 @@ function EditListing() {
       </div>
     );
   }
-
   if (error) {
     return (
       <div className="min-h-screen max-w-7xl mx-auto px-3 lg:py-24 md:py-20 py-14">
@@ -62,7 +80,6 @@ function EditListing() {
       </div>
     );
   }
-
   return (
     <main className="min-h-screen max-w-7xl px-3 mx-auto">
       <section className="lg:py-24 md:py-20 py-14">
@@ -73,9 +90,9 @@ function EditListing() {
           <Formik
             initialValues={listing}
             validationSchema={validationSchema}
-            onSubmit={(values) => updateListing(values, listingId)}
+            onSubmit={onSubmit}
           >
-            {({ isSubmitting, values, resetForm }) => {
+            {({ isSubmitting, values, resetForm, setFieldValue }) => {
               return (
                 <Form className="space-y-4">
                   <div>
@@ -216,6 +233,65 @@ function EditListing() {
                     </div>
                   )}
 
+                  <FileInput
+                    accept="image/jpg, image/png, image/jpeg"
+                    onDrop={(acceptedFiles) =>
+                      onDropHanlder(acceptedFiles, setFieldValue)
+                    }
+                    dropZoneText="Select images"
+                    id="images"
+                    name="images"
+                    label="Upload listing images (.jpg, .png)"
+                  />
+
+                  {imageThumbs.length > 0 && (
+                    <ul className="flex items-center justify-start flex-wrap gap-4 mt-4">
+                      {imageThumbs.map((file) => (
+                        <li
+                          key={uuidv4()}
+                          className="flex-shrink-0 relative w-24 h-24"
+                        >
+                          <UploadedImageThumb
+                            src={file.preview}
+                            onClick={() =>
+                              deleteSelectedImage(
+                                imageThumbs,
+                                file.path,
+                                setFieldValue,
+                                setImageThumbs
+                              )
+                            }
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {values.imgUrls.length > 0 && (
+                    <div>
+                      <p>Current images:</p>
+                      <ul className="flex items-center justify-start flex-wrap gap-4 mt-4">
+                        {values.imgUrls.map((url) => (
+                          <li
+                            key={uuidv4()}
+                            className="flex-shrink-0 relative w-24 h-24"
+                          >
+                            <UploadedImageThumb
+                              src={url}
+                              onClick={() =>
+                                deleteUploadedImage(
+                                  setFieldValue,
+                                  url,
+                                  values.imgUrls
+                                )
+                              }
+                            />
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <button
                       type="button"
@@ -242,5 +318,4 @@ function EditListing() {
     </main>
   );
 }
-
 export default EditListing;
