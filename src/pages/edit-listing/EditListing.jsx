@@ -98,7 +98,7 @@ function EditListing() {
                     <div
                       role="group"
                       aria-labelledby="listing-type"
-                      className="grid grid-cols-2 gap-9 max-w-md"
+                      className="grid grid-cols-2 gap-9 max-w-md mt-2"
                     >
                       <RadioInput
                         id="forSale"
@@ -165,6 +165,39 @@ function EditListing() {
                       </div>
                     </div>
                   )}
+                  {/* bhk */}
+                  <div>
+                    <span id="listing-type">BHK type</span>
+                    <br />
+                    <div
+                      role="group"
+                      aria-labelledby="listing-type"
+                      className="grid grid-cols-3 gap-2 w-full max-w-screen-sm mt-2"
+                    >
+                      <RadioInput
+                        id="villa"
+                        label="Villa "
+                        name="houseType"
+                        value="Villa"
+                        checked={values.houseType === "Villa"}
+                      />
+                      <RadioInput
+                        id="apartment"
+                        label="Apartment "
+                        name="houseType"
+                        value="Apartment"
+                        checked={values.houseType === "Apartment"}
+                      />
+                      <RadioInput
+                        id="penthouse"
+                        label="Penthouse "
+                        name="houseType"
+                        value="Penthouse"
+                        checked={values.houseType === "Penthouse"}
+                      />
+                    </div>
+                  </div>
+                  {/* bhk */}
                   <div className="grid md:grid-cols-4 grid-cols-2 gap-4">
                     <div>
                       <TextInput

@@ -14,6 +14,7 @@ function ListingInfoCard({
   onOffer,
   regularPrice,
   type,
+  houseType,
 }) {
   return (
     <>
@@ -24,6 +25,11 @@ function ListingInfoCard({
         regularPrice={regularPrice}
       />
       <ul className="space-y-6">
+        <li className="listing-info-list-item">
+          <RulerIcon width="50px" height="50px" className="icon" />
+          <span className="num">{houseType}</span>
+          <span className="lbl">Apna Ghar</span>
+        </li>
         <li className="listing-info-list-item">
           <RulerIcon width="50px" height="50px" className="icon" />
           <span className="num">{listingSize}</span>

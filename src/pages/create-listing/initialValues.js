@@ -1,8 +1,8 @@
 const initialValues = {
-  type: 'sale',
-  title: '',
-  description: '',
-  address: '',
+  type: "sale",
+  title: "",
+  description: "",
+  address: "",
   geolocationEnabled: false,
   latitude: 0,
   longitude: 0,
@@ -13,7 +13,8 @@ const initialValues = {
   regularPrice: 0,
   discountPrice: 0,
   onOffer: false,
-  images: null
+  images: null,
+  houseType: "Villa",
 };
 
 export default initialValues;

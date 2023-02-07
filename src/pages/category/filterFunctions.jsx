@@ -39,12 +39,33 @@ export const getFilteredListings = async (categoryName, sortBy) => {
         where("type", "==", categoryName),
         orderBy("regularPrice", "asc")
       );
+    } else if (sortBy === "Villa") {
+      q = query(
+        listingsRef,
+        where("type", "==", categoryName),
+        where("houseType", "==", "Villa"),
+        orderBy("postedOn", "desc")
+      );
+    } else if (sortBy === "Apartment") {
+      q = query(
+        listingsRef,
+        where("type", "==", categoryName),
+        where("houseType", "==", "Apartment"),
+        orderBy("postedOn", "desc")
+      );
+    } else if (sortBy === "Penthouse") {
+      q = query(
+        listingsRef,
+        where("type", "==", categoryName),
+        where("houseType", "==", "Penthouse"),
+        orderBy("postedOn", "desc")
+      );
     } else if (sortBy === "default") {
-         q = query(
-           listingsRef,
-           where("type", "==", categoryName),
-           orderBy("postedOn", "desc")
-         );
+      q = query(
+        listingsRef,
+        where("type", "==", categoryName),
+        orderBy("postedOn", "desc")
+      );
     } else if (sortBy === "price-desc") {
       q = query(
         listingsRef,

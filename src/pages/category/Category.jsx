@@ -80,6 +80,9 @@ function Category() {
               <option value="default">Default</option>
               <option value="price-asc">Price : Low to High</option>
               <option value="price-desc">Price : High to Low</option>
+              <option value="Villa">Villa</option>
+              <option value="Apartment">Apartment</option>
+              <option value="Penthouse">PentHouse</option>
               <option value="bedrooms">Bedrooms</option>
               <option value="bathrooms">Bathrooms</option>
               <option value="carspace">Car space</option>

@@ -37,6 +37,7 @@ const validationSchema = Yup.object({
       .required("Required"),
   }),
   images: Yup.mixed().required("You must upload atleast one image"),
+  houseType: Yup.string().required("Required"),
 });
 
 export default validationSchema;
