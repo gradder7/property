@@ -28,9 +28,15 @@ function HeroSection() {
           />
         </h1>
 
-       <HomeSliderText/>
-        
+        <HomeSliderText />
+
         <div className="flex items-center justify-center flex-wrap gap-4">
+          <Link
+            to="/category/all-category"
+            className="btn bg-primary text-gray-900 hover:bg-gray-200 flex-shrink-0 w-[160px]"
+          >
+            Explore
+          </Link>
           {loggedIn ? (
             <h2 className="text-green-400 text-4xl font-bold text-white-900 mb-2 text-center">
               Welcome {auth.currentUser.displayName}{" "}
@@ -38,7 +44,7 @@ function HeroSection() {
           ) : (
             <Link
               to="/login"
-              className="btn bg-white text-gray-900 hover:bg-gray-200 flex-shrink-0 w-[160px]"
+              className="btn bg-primary text-gray-900 hover:bg-gray-200 flex-shrink-0 w-[160px]"
             >
               Login
             </Link>

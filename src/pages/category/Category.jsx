@@ -13,6 +13,7 @@ function Category() {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  // const [isAllListing, setisAllListing] = useState(true);
   const { checkFavorite } = useContext(FavoritesContext);
   const { categoryName } = useParams();
 
@@ -20,7 +21,9 @@ function Category() {
     document.title =
       categoryName === "sale"
         ? "For Sale | Rent or Sell"
-        : "For Rent | Rent or Sell";
+        : categoryName === "rent"
+        ? "For Rent | Rent or Sell"
+        : "All | Rent or Sell";
     const getListingsData = async () => {
       const [data, error] = await getListingsByCategory(categoryName);
       if (error) {
@@ -57,7 +60,18 @@ function Category() {
     }
   }, [sortBy]);
 
-  const pageTitle = categoryName === "sale" ? "For Sale" : "For Rent";
+  const pageTitle =
+    categoryName === "sale"
+      ? "For Sale"
+      : categoryName === "rent"
+      ? "For Rent"
+      : "All Listings";
+
+  const isAllListing = categoryName === "all-category" ? true : false;
+
+  // if (loading) {
+  //   return <Loader />;
+  // }
 
   return (
     <main className="min-h-screen max-w-7xl px-3 mx-auto">
@@ -78,8 +92,12 @@ function Category() {
               onChange={(e) => setSortBy(e.target.value)}
             >
               <option value="default">Default</option>
-              <option value="price-asc">Price : Low to High</option>
-              <option value="price-desc">Price : High to Low</option>
+              {!isAllListing && (
+                <>
+                  <option value="price-asc">Price : Low to High</option>
+                  <option value="price-desc">Price : High to Low</option>
+                </>
+              )}
               <option value="Villa">Villa</option>
               <option value="Apartment">Apartment</option>
               <option value="Penthouse">PentHouse</option>

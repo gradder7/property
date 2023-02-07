@@ -12,7 +12,7 @@ const Home = React.lazy(() => import("./pages/home/Home"));
 const Login = React.lazy(() => import("./pages/login/Login"));
 const Signup = React.lazy(() => import("./pages/sign-up/Signup"));
 const ForgotPassword = React.lazy(() =>
-  import("./pages/forgot-password/ForgotPassword")
+import("./pages/forgot-password/ForgotPassword")
 );
 const Profile = React.lazy(() => import("./pages/profile/Profile"));
 const CreateListing = React.lazy(() =>
@@ -72,6 +72,7 @@ function App() {
                 <Route path="/messages" element={<PrivateRoute />}>
                   <Route path="/messages" element={<Messages />} />
                 </Route>
+            
               </Routes>
               <Footer />
             </ScrollToTop>

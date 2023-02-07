@@ -3,12 +3,21 @@ import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import { db } from "../../firebase.config";
 
 export const getListingsByCategory = async (categoryName) => {
-  if (categoryName !== "sale" && categoryName !== "rent") {
+  if (
+    categoryName !== "sale" &&
+    categoryName !== "rent" &&
+    categoryName !== "all-category"
+  ) {
     return [null, "Invalid category"];
   }
   try {
+    let q;
     const listingsRef = collection(db, "listings");
-    const q = query(listingsRef, where("type", "==", categoryName));
+    if (categoryName === "sale" || categoryName === "rent") {
+      q = query(listingsRef, where("type", "==", categoryName));
+    } else {
+      q = query(listingsRef, orderBy("postedOn", "desc"));
+    }
     const querySnapshot = await getDocs(q);
     const data = [];
     querySnapshot.forEach((doc) => {
@@ -27,57 +36,104 @@ export const getListingsByCategory = async (categoryName) => {
 };
 
 export const getFilteredListings = async (categoryName, sortBy) => {
-  if (categoryName !== "sale" && categoryName !== "rent") {
+  if (
+    categoryName !== "sale" &&
+    categoryName !== "rent" &&
+    categoryName !== "all-category"
+  ) {
     return [null, "Invalid category"];
   }
   try {
     const listingsRef = collection(db, "listings");
     let q;
     if (sortBy === "price-asc") {
-      q = query(
-        listingsRef,
-        where("type", "==", categoryName),
-        orderBy("regularPrice", "asc")
-      );
+      if (categoryName === "sale" || categoryName === "rent") {
+        q = query(
+          listingsRef,
+          where("type", "==", categoryName),
+          orderBy("regularPrice", "asc")
+        );
+      } else {
+        q = query(listingsRef, orderBy("regularPrice", "asc"));
+      }
     } else if (sortBy === "Villa") {
-      q = query(
-        listingsRef,
-        where("type", "==", categoryName),
-        where("houseType", "==", "Villa"),
-        orderBy("postedOn", "desc")
-      );
+      if (categoryName === "sale" || categoryName === "rent") {
+        q = query(
+          listingsRef,
+          where("type", "==", categoryName),
+          where("houseType", "==", "Villa"),
+          orderBy("postedOn", "desc")
+        );
+      } else {
+        q = query(
+          listingsRef,
+          where("houseType", "==", "Villa"),
+          orderBy("postedOn", "desc")
+        );
+      }
     } else if (sortBy === "Apartment") {
-      q = query(
-        listingsRef,
-        where("type", "==", categoryName),
-        where("houseType", "==", "Apartment"),
-        orderBy("postedOn", "desc")
-      );
+      if (categoryName === "sale" || categoryName === "rent") {
+        q = query(
+          listingsRef,
+          where("type", "==", categoryName),
+          where("houseType", "==", "Apartment"),
+          orderBy("postedOn", "desc")
+        );
+      } else {
+        q = query(
+          listingsRef,
+          where("houseType", "==", "Apartment"),
+          orderBy("postedOn", "desc")
+        );
+      }
     } else if (sortBy === "Penthouse") {
-      q = query(
-        listingsRef,
-        where("type", "==", categoryName),
-        where("houseType", "==", "Penthouse"),
-        orderBy("postedOn", "desc")
-      );
+      if (categoryName === "sale" || categoryName === "rent") {
+        q = query(
+          listingsRef,
+          where("type", "==", categoryName),
+          where("houseType", "==", "Penthouse"),
+          orderBy("postedOn", "desc")
+        );
+      } else {
+        q = query(
+          listingsRef,
+          where("houseType", "==", "Penthouse"),
+          orderBy("postedOn", "desc")
+        );
+      }
     } else if (sortBy === "default") {
-      q = query(
-        listingsRef,
-        where("type", "==", categoryName),
-        orderBy("postedOn", "desc")
-      );
+      if (categoryName === "sale" || categoryName === "rent") {
+        q = query(
+          listingsRef,
+          where("type", "==", categoryName),
+          orderBy("postedOn", "desc")
+        );
+      } else {
+        q = query(listingsRef, orderBy("postedOn", "desc"));
+      }
     } else if (sortBy === "price-desc") {
-      q = query(
-        listingsRef,
-        where("type", "==", categoryName),
-        orderBy("regularPrice", "desc")
-      );
+      if (categoryName === "sale" || categoryName === "rent") {
+        q = query(
+          listingsRef,
+          where("type", "==", categoryName),
+          orderBy("regularPrice", "desc")
+        );
+      } else {
+        q = query(listingsRef, orderBy("regularPrice", "desc"));
+      }
     } else {
-      q = query(
-        listingsRef,
-        where("type", "==", categoryName),
-        orderBy(sortBy, "desc")
-      );
+      if (categoryName === "sale" || categoryName === "rent") {
+        q = query(
+          listingsRef,
+          where("type", "==", categoryName),
+          orderBy(sortBy, "desc")
+        );
+      }else{
+          q = query(
+            listingsRef,
+            orderBy(sortBy, "desc")
+          );
+      }
     }
     const querySnapshot = await getDocs(q);
     const data = [];
