@@ -1,7 +1,13 @@
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import SwiperCore, {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Autoplay,
+} from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/bundle";
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay]);
 
 function ListingGallery({ imgUrls, title }) {
   return (
@@ -9,6 +15,10 @@ function ListingGallery({ imgUrls, title }) {
       autoHeight={true}
       slidesPerView={1}
       pagination={{ clickable: true }}
+      autoplay={{
+        delay: 2000,
+        disableOnInteraction: false,
+      }}
       className="listing-gallery-carousel"
     >
       {imgUrls.map((imageURL, index) => (
