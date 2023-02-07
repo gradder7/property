@@ -6,7 +6,7 @@ import TextInput from "../../components/TextInput";
 import TextAreaInput from "../../components/TextAreaInput";
 import ToggleInput from "../../components/ToggleInput";
 import RadioInput from "../../components/RadioInput";
-import FileInput from '../../components/FileInput';
+import FileInput from "../../components/FileInput";
 
 import validationSchema from "./validationSchema";
 import initialValues from "./initialValues";
@@ -17,15 +17,21 @@ import {
 
 import { ReactComponent as DeleteIcon } from "../../assets/svg/delete.svg";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../components/Loader";
 
 function CreateListing() {
   const [imageThumbs, setImageThumbs] = useState([]);
-   const navigate = useNavigate();
-   const onSubmit = async (values) => {
-     const listingId = await submitListingData(values);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const onSubmit = async (values) => {
+    setLoading(true);
+    const listingId = await submitListingData(values);
     //  when created got to particular listing
-     navigate(`/listing/${listingId}`);
-   };
+    setLoading(false);
+    if (listingId) {
+      navigate(`/listing/${listingId}`);
+    }
+  };
 
   const onDropHanlder = (acceptedFiles, setFieldValue) => {
     setImageThumbs(
@@ -37,6 +43,9 @@ function CreateListing() {
     );
     setFieldValue("images", acceptedFiles);
   };
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <main className="min-h-screen max-w-7xl px-3 mx-auto">
@@ -165,7 +174,7 @@ function CreateListing() {
                   </div>
                   <div>
                     <TextInput
-                      label="Price (in USD)"
+                      label="Price (in INR)"
                       id="regularPrice"
                       name="regularPrice"
                       type="number"
@@ -182,7 +191,7 @@ function CreateListing() {
                   {values.onOffer && (
                     <div>
                       <TextInput
-                        label="Discount price (in USD)"
+                        label="Discount price (in INR)"
                         id="discountPrice"
                         name="discountPrice"
                         type="number"

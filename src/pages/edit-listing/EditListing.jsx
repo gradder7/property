@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { doc, getDoc } from "firebase/firestore";
 
@@ -18,6 +18,8 @@ import {
   deleteSelectedImage,
 } from "./editListingFunctions";
 import { db } from "../../firebase.config";
+import Loader from "../../components/Loader";
+import { toast } from "react-toastify";
 
 function EditListing() {
   const [imageThumbs, setImageThumbs] = useState([]);
@@ -25,6 +27,7 @@ function EditListing() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const { listingId } = useParams();
+  const navigate = useNavigate();
   useEffect(() => {
     document.title = "Edit listing | Rent or Sell";
   }, []);
@@ -63,22 +66,17 @@ function EditListing() {
   };
 
   const onSubmit = async (values) => {
+    setLoading(true);
     await updateListing(values, listingId);
+    setLoading(false);
+    navigate(`/listing/${listingId}`);
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen max-w-7xl mx-auto px-3 lg:py-24 md:py-20 py-14">
-        <p>Loading....</p>
-      </div>
-    );
+    return <Loader />;
   }
   if (error) {
-    return (
-      <div className="min-h-screen max-w-7xl mx-auto px-3 lg:py-24 md:py-20 py-14">
-        <p>{error}</p>
-      </div>
-    );
+    return toast.error(error);
   }
   return (
     <main className="min-h-screen max-w-7xl px-3 mx-auto">
@@ -207,7 +205,7 @@ function EditListing() {
                   </div>
                   <div>
                     <TextInput
-                      label="Price (in USD)"
+                      label="Price (in INR)"
                       id="regularPrice"
                       name="regularPrice"
                       type="number"
@@ -224,7 +222,7 @@ function EditListing() {
                   {values.onOffer && (
                     <div>
                       <TextInput
-                        label="Discount price (in USD)"
+                        label="Discount price (in INR)"
                         id="discountPrice"
                         name="discountPrice"
                         type="number"

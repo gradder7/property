@@ -7,22 +7,22 @@ import { ref, uploadBytesResumable, getDownloadURL,getStorage } from "firebase/s
 import { db } from "../../firebase.config";
 import { Auth, getAuth } from "firebase/auth";
 
-export const getCoordinates = async (address) => {
-  try {
-    const { data } = await axios({
-      method: "get",
-      url: "https://us1.locationiq.com/v1/search.php",
-      params: {
-        key: import.meta.env.VITE_GEOCODING_API_KEY,
-        q: address,
-        format: "json",
-      },
-    });
-    return [data, null];
-  } catch (error) {
-    return [null, error.message];
-  }
-};
+// export const getCoordinates = async (address) => {
+//   try {
+//     const { data } = await axios({
+//       method: "get",
+//       url: "https://us1.locationiq.com/v1/search.php",
+//       params: {
+//         key: import.meta.env.VITE_GEOCODING_API_KEY,
+//         q: address,
+//         format: "json",
+//       },
+//     });
+//     return [data, null];
+//   } catch (error) {
+//     return [null, error.message];
+//   }
+// };
 
 export const storeImage = async (image) => {
     const auth=getAuth();
@@ -56,13 +56,27 @@ export const updateListing = async (values, listingId) => {
   try {
     const formData = { ...values };
     if (!formData.geolocationEnabled) {
-      const [data, error] = await getCoordinates(formData.address);
-      if (error) {
-        throw new Error(error);
-      }
+      const dataNew = await fetch(
+        ` https://api.tomtom.com/search/2/geocode/${formData.address}.json?&key=fkbAuvtsShkE8UFas5Fu493TW6zDBhwj`
+      );
+      const data = await dataNew.json();
+      console.log(dataNew);
+      console.log(data);
+      console.log(formData.address);
+      // console.log(dataNew);
+      // console.log(dataNew);
+
+      // https://api.tomtom.com/search/2/geocode/khari, bazar lohaghat,uttrakhand.json?&key=fkbAuvtsShkE8UFas5Fu493TW6zDBhwj
+      // const [data, error] = await getCoordinates(formData.address);
+      //  if (error) {
+      //   throw new Error(error);
+      // }
+
+      // dataNew.results[0].position.lat;
+      // dataNew.results[0].position.lon;
       formData.geolocation = {
-        latitude: data[0].lat,
-        longitude: data[0].lon,
+        latitude: data.results[0].position.lat,
+        longitude: data.results[0].position.lon,
       };
     } else {
       formData.geolocation = {

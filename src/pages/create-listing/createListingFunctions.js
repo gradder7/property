@@ -1,6 +1,6 @@
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
-import { db, storage } from "../../firebase.config";
+import { db } from "../../firebase.config";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import {
   ref,
@@ -10,25 +10,9 @@ import {
 } from "firebase/storage";
 import { toast } from "react-toastify";
 import { getAuth } from "firebase/auth";
+import { useState } from "react";
 
-const auth=getAuth();
-export const getCoordinates = async (address) => {
-  try {
-    const { data } = await axios({
-      method: "get",
-      url: "https://us1.locationiq.com/v1/search.php",
-      params: {
-        key: import.meta.env.VITE_GEOCODING_API_KEY,
-        q: address,
-        format: "json",
-      },
-    });
-
-    return [data, null];
-  } catch (error) {
-    return [null, error.message];
-  }
-};
+const auth = getAuth();
 
 export const storeImage = async (image) => {
   return new Promise((resolve, reject) => {
@@ -64,16 +48,29 @@ export const submitListingData = async (values) => {
       userRef: auth.currentUser.uid,
       postedOn: serverTimestamp(),
     };
-
+    let location;
     if (!formData.geolocationEnabled) {
-      const [data, error] = await getCoordinates(formData.address);
-      if (error) {
-        throw new Error(error);
-      }
+      const dataNew = await fetch(
+        ` https://api.tomtom.com/search/2/geocode/${formData.address}.json?&key=fkbAuvtsShkE8UFas5Fu493TW6zDBhwj`
+      );
+      const data = await dataNew.json();
+      console.log(dataNew);
+      console.log(data);
+      console.log(formData.address);
+
       formData.geolocation = {
-        latitude: data[0].lat,
-        longitude: data[0].lon,
+        // ? give us an error if null
+        latitude: data.results[0]?.position.lat ?? 0,
+        longitude: data.results[0]?.position.lon ?? 0,
       };
+      location =
+        data.summary.totalResults === 0
+          ? undefined
+          : data.results[0]?.address.freeformAddress;
+      if (location === undefined || location.includes("undefined")) {
+        toast.error("Please enter a correct address");
+        return;
+      }
     } else {
       formData.geolocation = {
         latitude: formData.latitude,
@@ -93,12 +90,13 @@ export const submitListingData = async (values) => {
     delete formData.geolocationEnabled;
     delete formData.images;
 
-     const listingDocRef = await addDoc(collection(db, "listings"), {
-       ...formData,
-       imgUrls,
-     });
-     toast.success("Listing created successfully");
-     return listingDocRef.id;
+    const listingDocRef = await addDoc(collection(db, "listings"), {
+      ...formData,
+      imgUrls,
+    });
+    toast.success("Listing created successfully");
+    //returns id to there
+    return listingDocRef.id;
   } catch (error) {
     toast.error(error.message);
   }
