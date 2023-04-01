@@ -4,9 +4,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-
 import TextInput from "../../components/TextInput";
-
 import { db } from "../../firebase.config";
 
 function EditProfileForm() {
