@@ -19,6 +19,7 @@ function ListingDetails() {
   const [listing, setListing] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [landlord, setLandlord] = useState({});
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const { checkFavorite } = useContext(FavoritesContext);
   const auth = getAuth();
@@ -32,10 +33,12 @@ function ListingDetails() {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setListing(docSnap.data());
+          // data(listing.userRef);
         } else {
           throw new Error("Listing does not exist");
         }
         console.log(docSnap.data());
+        getLandlord(docSnap.data().userRef);
       } catch (error) {
         // toast.error(error.message);
         setError(error.message);
@@ -43,9 +46,22 @@ function ListingDetails() {
         setLoading(false);
       }
     };
-
     getListingData();
   }, [listingId]);
+
+  // get landlord data
+  const getLandlord = async (userRef) => {
+    const docRef = doc(db, "users", userRef);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      setLandlord(docSnap.data());
+    } else {
+      toast.error("Could not get landlord data");
+    }
+  };
+
+  console.log(landlord);
 
   const {
     address,
@@ -58,9 +74,10 @@ function ListingDetails() {
   } = listing;
   console.log("=>>>>>", listing);
 
+  const { name } = landlord;
+
   if (loading) {
     return <ListingDetailsSkeleton />;
-    
   }
   if (error) {
     return (
@@ -107,6 +124,9 @@ function ListingDetails() {
 
               <span className="block text-sm text-gray-500 mb-3 mt-4">
                 Posted on : {format(postedOn.toDate(), "d LLLL, y")}
+              </span>
+              <span className="block text-sm text-gray-500 mb-3 mt-4">
+                Posted By : {name}
               </span>
               <address className="not-italic text-lg text-gray-900 mb-3">
                 {address}
