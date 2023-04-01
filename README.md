@@ -1,3 +1,41 @@
+# ApnaGhar (Property Sell , buy or rent online)
+
+A web app built in react, tailwind, and firebase that allows user to put their house online for sale or rent after becoming a member of the website. Users which are not members can explore the property. After becoming a member the user can perform CRUD operations for their property and also contact the other property owners. Users can also watchlist the property they like.
+
+## Features
+
+* Users can log in and register through the mail id and also have the option to log in/register through their google account.
+* Users who are not members can see the property which is listed and explore the property.
+* Users can create/edit/delete/update listings from their accounts and save the listing.
+* Users can filter listings according to price low to high and vice versa, and according to property type and other factors too.
+* Geocoding for the property location and mapping them using latitude and longitude in the map,
+* Users can save listings (like wishlists).
+
+## Technologies Used
+
+> HTML, CSS, Tailwindcss, DaisyUi, React.js, Firebase
+
+[Click me to checkout my work](https://write.geeksforgeeks.org/).
+
+**For testing purpose use these credentials or you can sign up also using email id and password or GAuth:-**
+
+**Email:** john@john.com
+
+
+**Password:** 12345678
+
+**I have used firebase for the authentication, file storage, and database.**
+
+
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
