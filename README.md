@@ -10,6 +10,7 @@ A web app built in react, tailwind, and firebase that allows user to put their h
 * Users can filter listings according to price low to high and vice versa, and according to property type and other factors too.
 * Geocoding for the property location and mapping them using latitude and longitude in the map,
 * Users can save listings (like wishlists).
+* User can send the message to the owner of the Property.
 
 ## Technologies Used
 
